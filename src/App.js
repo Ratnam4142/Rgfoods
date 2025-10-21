@@ -10,7 +10,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="logo">
         <Link to="/">
-          <h2>Healthyfood</h2>
+          <h2>RPfoods</h2>
         </Link>
       </div>
       <ul className="nav-links">
