@@ -1,0 +1,276 @@
+.menu-page {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+/* LEFT SIDEBAR */
+.sidebar-left {
+  width: 20%;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.category {
+  margin-bottom: 12px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffe5cc;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.category-header:hover {
+  background: #ffcc99;
+}
+
+/* CENTER CONTENT */
+.menu-center {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.category-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e67e22;
+  margin-bottom: 16px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.menu-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 12px;
+  transition: 0.3s;
+}
+
+.menu-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.menu-card h3 {
+  margin: 10px 0 6px;
+  color: #333;
+  font-size: 16px;
+}
+
+/* WEIGHT OPTIONS */
+.weight-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #fff8f0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ffd6a5;
+  margin-bottom: 8px;
+}
+
+.weight-options label {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.weight-options input[type="radio"] {
+  accent-color: #e67e22;
+}
+
+/* ADD TO CART BUTTON */
+.menu-card button {
+  background: #e67e22;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 90%;
+}
+
+.menu-card button:hover {
+  background: #d35400;
+}
+
+.empty-category {
+  text-align: center;
+  margin-top: 100px;
+  color: #777;
+}
+
+/* RIGHT SIDEBAR (CART) */
+.sidebar-right {
+  width: 25%;
+  background: #fff;
+  border-left: 1px solid #ddd;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 90vh; /* slightly smaller cart height */
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-right h2 {
+  color: #e67e22;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.empty-cart {
+  color: #888;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cart-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  scrollbar-width: thin;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.cart-controls button {
+  background: #eee;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cart-controls button:hover {
+  background: #ddd;
+}
+
+.remove-btn {
+  color: red;
+  background: none;
+}
+
+.cart-total {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.checkout-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background: #219150;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 360px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.whatsapp-btn {
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #ccc;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}

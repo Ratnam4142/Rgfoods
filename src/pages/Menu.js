@@ -1,66 +1,83 @@
-// src/pages/MenuPage.js
-import React, { useState } from 'react';
-import '../css/MenuPage.css';
+import React, { useState } from "react";
+import "../css/Menu.css";
 
 const MenuPage = () => {
   const [cart, setCart] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [checkoutDetails, setCheckoutDetails] = useState({
-    fullName: '',
-    doorNumber: '',
-    address: ''
+    fullName: "",
+    mobileNumber: "",
+    doorNumber: "",
+    address: "",
   });
+  const [selectedWeights, setSelectedWeights] = useState({}); // track selected weight for each item
 
   const menuCategories = [
     {
-      name: 'Sweets',
+      name: "Sweets",
       items: [
-        { id: 1, name: 'Bellam Sunnundalu', weight: '1kg', price: 899 },
-        { id: 2, name: 'Bellam Ragi Laddu', weight: '1kg', price: 799 },
-        { id: 3, name: 'Nuvvula Laddu', weight: '1kg', price: 699 },
-        { id: 4, name: 'Palli Laddu', weight: '1kg', price: 599 },
-        { id: 5, name: 'Rava Laddu', weight: '1kg', price: 599 }
-      ]
+        { id: 1, name: "Bellam Sunnundalu", price1kg: 899, price500g: 450, image: "/images/products/1.png" },
+        { id: 2, name: "Bellam Ragi Laddu", price1kg: 799, price500g: 400, image: "/images/products/2.png" },
+        { id: 3, name: "Nuvvula Laddu", price1kg: 699, price500g: 350, image: "/images/products/3.png" },
+        { id: 4, name: "Palli Laddu", price1kg: 599, price500g: 300, image: "/images/products/4.png" },
+        { id: 5, name: "Rava Laddu", price1kg: 599, price500g: 300, image: "/images/products/5.png" },
+        { id: 6, name: "Boondi laddu", price1kg: 599, price500g: 300, image: "/images/products/5.png" },
+      ],
     },
     {
-      name: 'Snacks',
+      name: "Snacks",
       items: [
-        { id: 6, name: 'Murukulu', weight: '1kg', price: 699 },
-        { id: 7, name: 'Janthikalu', weight: '1kg', price: 550 },
-        { id: 8, name: 'Chekkalu', weight: '1kg', price: 550 },
-        { id: 9, name: 'Aaku Pakodi', weight: '1kg', price: 550 },
-        { id: 10, name: 'Kara Boondi', weight: '1kg', price: 599 }
-      ]
+        { id: 7, name: "Murukulu", price1kg: 699, price500g: 350, image: "/images/products/6.svg" },
+        { id: 8, name: "Janthikalu", price1kg: 550, price500g: 280, image: "/images/products/7.svg" },
+        { id: 9, name: "Chekkalu", price1kg: 550, price500g: 280, image: "/images/products/8.svg" },
+        { id: 10, name: "Aaku Pakodi", price1kg: 550, price500g: 280, image: "/images/products/9.svg" },
+        { id: 11, name: "Kara Boondi", price1kg: 599, price500g: 300, image: "/images/products/10.svg" },
+      ],
     },
     {
-      name: 'Pickles',
+      name: "Pickles",
       items: [
-        { id: 11, name: 'Chicken Pickle', weight: '1kg', price: 1400 },
-        { id: 12, name: 'Chicken Gongora', weight: '1kg', price: 1400 }
-      ]
-    }
+        { id: 12, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 13, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+      ],
+    },
   ];
 
   const toggleCategory = (categoryName) => {
     setExpandedCategories((prev) => ({
       ...prev,
-      [categoryName]: !prev[categoryName]
+      [categoryName]: !prev[categoryName],
     }));
   };
 
-  const getImagePath = (itemId) => `/images/products/${itemId}.jpg`;
+  const ImageEnsurePng = ({ itemId, svgPath, alt, width = 400, height = 300, ...props }) => {
+    const [src] = useState(`/images/products/${itemId}.png`);
+    return <img src={src} alt={alt} {...props} />;
+  };
 
-  const addToCart = (item, quantity) => {
+  const addToCart = (item) => {
+    const selectedWeight = selectedWeights[item.id];
+    if (!selectedWeight) {
+      alert("Please select a weight (500g or 1kg) before adding to cart.");
+      return;
+    }
+
+    const price = selectedWeight === "1kg" ? item.price1kg : item.price500g;
+    const uniqueId = `${item.id}-${selectedWeight}`;
+
     setCart((prevCart) => {
-      const existing = prevCart.find((i) => i.id === item.id);
+      const existing = prevCart.find((i) => i.id === uniqueId);
       if (existing) {
         return prevCart.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
+          i.id === uniqueId ? { ...i, quantity: i.quantity + 1 } : i
         );
       } else {
-        return [...prevCart, { ...item, quantity }];
+        return [
+          ...prevCart,
+          { ...item, id: uniqueId, weight: selectedWeight, price, quantity: 1 },
+        ];
       }
     });
   };
@@ -87,125 +104,158 @@ const MenuPage = () => {
 
   const handleCheckout = (e) => {
     e.preventDefault();
-    const { fullName, doorNumber, address } = checkoutDetails;
+    const { fullName, mobileNumber, doorNumber, address } = checkoutDetails;
 
-    if (!fullName || !doorNumber) {
-      alert('Please enter your name and door number.');
+    if (!fullName || !mobileNumber || !doorNumber || !address) {
+      alert("Please fill all mandatory fields (Name, Mobile, Door No, Address).");
       return;
     }
 
-    // Hardcoded WhatsApp number (replace with your own)
-    const yourWhatsAppNumber = '7981213612';
-
+    const yourWhatsAppNumber = "7981213612";
     const cartLines = cart.map(
       (item) =>
-        `${item.name} (${item.weight}) x${item.quantity} = ₹${item.price * item.quantity}`
+        `${item.name} (${item.weight}) x${item.quantity} = ₹${
+          item.price * item.quantity
+        }`
     );
-    const cartText = cartLines.join('%0A');
+    const cartText = cartLines.join("%0A");
     const total = getTotal();
-    const addrText = address ? `%0A*Address:* ${address}` : '';
 
-    const message = `*New Order*%0A%0A*Name:* ${fullName}%0A*Door No.:* ${doorNumber}${addrText}%0A%0A*Items:*%0A${cartText}%0A%0A*Total:* ₹${total}`;
-
+    const message = `*New Order*%0A%0A*Name:* ${fullName}%0A*Mobile:* ${mobileNumber}%0A*Door No.:* ${doorNumber}%0A*Address:* ${address}%0A%0A*Items:*%0A${cartText}%0A%0A*Total:* ₹${total}`;
     const whatsappUrl = `https://wa.me/91${yourWhatsAppNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, "_blank");
 
-    // Reset form and cart
     setCart([]);
     setShowCheckoutModal(false);
-    setCheckoutDetails({ fullName: '', doorNumber: '', address: '' });
+    setCheckoutDetails({
+      fullName: "",
+      mobileNumber: "",
+      doorNumber: "",
+      address: "",
+    });
   };
 
   return (
-    <div className="menu-layout">
-      {/* LEFT: MENU */}
-      <div className="menu-sidebar">
+    <div className="menu-page">
+      {/* LEFT SIDEBAR */}
+      <div className="sidebar-left">
         {menuCategories.map((category) => (
-          <div
-            key={category.name}
-            className={`menu-category ${expandedCategories[category.name] ? 'expanded' : ''}`}
-          >
-            <div className="category-header" onClick={() => toggleCategory(category.name)}>
-              <h3 className="category-name">{category.name}</h3>
-              <span className="toggle-icon">
-                {expandedCategories[category.name] ? '▲' : '▼'}
-              </span>
+          <div key={category.name} className="category">
+            <div
+              className="category-header"
+              onClick={() => {
+                toggleCategory(category.name);
+                setSelectedCategory(category);
+              }}
+            >
+              <h3>{category.name}</h3>
+              <span>{expandedCategories[category.name] ? "▲" : "▼"}</span>
             </div>
-            {expandedCategories[category.name] && (
-              <ul className="menu-items">
-                {category.items.map((item) => (
-                  <li
-                    key={item.id}
-                    className={`menu-item ${selectedItem?.id === item.id ? 'active' : ''}`}
-                    onClick={() => setSelectedItem(item)}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         ))}
       </div>
 
-      {/* CENTER: ITEM PREVIEW */}
-      <div className="main-content">
-        {selectedItem ? (
-          <div className="product-card">
-            <img
-              src={getImagePath(selectedItem.id)}
-              alt={selectedItem.name}
-              className="product-image"
-            />
-            <h2>{selectedItem.name}</h2>
-            <p className="weight-price">
-              <strong>{selectedItem.weight}</strong> — ₹{selectedItem.price}
-            </p>
-            <p className="description">
-              Freshly prepared with natural ingredients. Made daily in small batches for maximum freshness and flavor.
-            </p>
-            <div className="body-quantity-controls">
-              <button className="qty-btn" onClick={() => updateQuantity(selectedItem.id, -1)}>−</button>
-              <span className="qty-display">
-                {cart.find((c) => c.id === selectedItem.id)?.quantity || 0}
-              </span>
-              <button className="qty-btn" onClick={() => updateQuantity(selectedItem.id, 1)}>+</button>
+      {/* CENTER CONTENT */}
+      <div className="menu-center">
+        {selectedCategory ? (
+          <div>
+            <h2 className="category-title">{selectedCategory.name}</h2>
+            <div className="menu-grid">
+              {selectedCategory.items.map((item) => (
+                <div key={item.id} className="menu-card">
+                  <ImageEnsurePng
+                    itemId={item.id}
+                    svgPath={item.image}
+                    alt={item.name}
+                    className="menu-img"
+                    width={300}
+                    height={200}
+                  />
+                  <h3>{item.name}</h3>
+
+                  {/* Weight options */}
+                  <div className="weight-options">
+                    <label>
+                      <input
+                        type="radio"
+                        name={`weight-${item.id}`}
+                        value="500g"
+                        checked={selectedWeights[item.id] === "500g"}
+                        onChange={() =>
+                          setSelectedWeights((prev) => ({
+                            ...prev,
+                            [item.id]: "500g",
+                          }))
+                        }
+                      />{" "}
+                      500g — ₹{item.price500g}
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name={`weight-${item.id}`}
+                        value="1kg"
+                        checked={selectedWeights[item.id] === "1kg"}
+                        onChange={() =>
+                          setSelectedWeights((prev) => ({
+                            ...prev,
+                            [item.id]: "1kg",
+                          }))
+                        }
+                      />{" "}
+                      1kg — ₹{item.price1kg}
+                    </label>
+                  </div>
+
+                  <button onClick={() => addToCart(item)}>+ Add to Cart</button>
+                </div>
+              ))}
             </div>
-            <button className="add-to-cart-btn" onClick={() => addToCart(selectedItem, 1)}>
-              + Add to Cart
-            </button>
           </div>
         ) : (
-          <div className="placeholder">
-            <p>Select an item from the menu to view details</p>
+          <div className="empty-category">
+            <p>Select a category to view items 🍴</p>
           </div>
         )}
       </div>
 
-      {/* RIGHT: CART */}
-      <div className="cart-sidebar">
-        <h2 className="cart-title">Your Cart</h2>
+      {/* RIGHT SIDEBAR (CART) */}
+      <div className="sidebar-right">
+        <h2>Your Cart</h2>
         {cart.length === 0 ? (
-          <p className="cart-empty">No items added yet</p>
+          <p className="empty-cart">No items added yet</p>
         ) : (
           <>
-            <ul className="cart-items">
+            <ul className="cart-list">
               {cart.map((item) => (
                 <li key={item.id} className="cart-item">
-                  <div className="cart-item-info">
-                    <span>{item.name}</span>
+                  <div>
+                    <p className="cart-name">
+                      {item.name} ({item.weight})
+                    </p>
+                    <p className="cart-details">
+                      ₹{item.price} × {item.quantity}
+                    </p>
                   </div>
-                  <div className="cart-item-controls">
-                    <button className="qty-btn" onClick={() => updateQuantity(item.id, -1)}>−</button>
-                    <span className="qty-display">{item.quantity}</span>
-                    <button className="qty-btn" onClick={() => updateQuantity(item.id, 1)}>+</button>
+                  <div className="cart-controls">
+                    <button onClick={() => updateQuantity(item.id, -1)}>−</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeItem(item.id)}
+                    >
+                      ✕
+                    </button>
                   </div>
-                  <button className="remove-btn" onClick={() => removeItem(item.id)}>✕</button>
                 </li>
               ))}
             </ul>
-            <div className="cart-total"><strong>Total: ₹{getTotal()}</strong></div>
-            <button className="checkout-btn" onClick={() => setShowCheckoutModal(true)}>
+            <div className="cart-total">Total: ₹{getTotal()}</div>
+            <button
+              className="checkout-btn"
+              onClick={() => setShowCheckoutModal(true)}
+            >
               Checkout
             </button>
           </>
@@ -214,47 +264,76 @@ const MenuPage = () => {
 
       {/* CHECKOUT MODAL */}
       {showCheckoutModal && (
-        <div className="modal-overlay" onClick={() => setShowCheckoutModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowCheckoutModal(false)}
+        >
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Order Details</h2>
             <form onSubmit={handleCheckout}>
-              <div className="form-group">
-                <label>Full Name *</label>
-                <input
-                  type="text"
-                  value={checkoutDetails.fullName}
-                  onChange={(e) =>
-                    setCheckoutDetails({ ...checkoutDetails, fullName: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Door Number *</label>
-                <input
-                  type="text"
-                  value={checkoutDetails.doorNumber}
-                  onChange={(e) =>
-                    setCheckoutDetails({ ...checkoutDetails, doorNumber: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Address (Optional)</label>
-                <textarea
-                  value={checkoutDetails.address}
-                  onChange={(e) =>
-                    setCheckoutDetails({ ...checkoutDetails, address: e.target.value })
-                  }
-                  rows="3"
-                />
-              </div>
-              <div className="modal-actions">
-                <button type="submit" className="checkout-btn">
+              <label>Full Name *</label>
+              <input
+                type="text"
+                value={checkoutDetails.fullName}
+                onChange={(e) =>
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    fullName: e.target.value,
+                  })
+                }
+                required
+              />
+
+              <label>Mobile Number *</label>
+              <input
+                type="tel"
+                value={checkoutDetails.mobileNumber}
+                onChange={(e) =>
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    mobileNumber: e.target.value,
+                  })
+                }
+                required
+                pattern="[0-9]{10}"
+                maxLength={10}
+              />
+
+              <label>Door Number *</label>
+              <input
+                type="text"
+                value={checkoutDetails.doorNumber}
+                onChange={(e) =>
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    doorNumber: e.target.value,
+                  })
+                }
+                required
+              />
+
+              <label>Address *</label>
+              <textarea
+                value={checkoutDetails.address}
+                onChange={(e) =>
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    address: e.target.value,
+                  })
+                }
+                rows="3"
+                required
+              />
+
+              <div className="modal-buttons">
+                <button type="submit" className="whatsapp-btn">
                   Send via WhatsApp
                 </button>
-                <button type="button" className="cancel-btn" onClick={() => setShowCheckoutModal(false)}>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowCheckoutModal(false)}
+                >
                   Cancel
                 </button>
               </div>
