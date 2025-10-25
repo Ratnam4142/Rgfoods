@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Homepage';
 import About from './pages/AboutPage.js';
 import Menu from './pages/Menu';
@@ -24,7 +24,9 @@ function Navbar() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    // Use HashRouter to avoid server 404 on page refresh for SPA routes.
+    // HashRouter keeps the route after a '#' so the server always receives the root URL.
+    <HashRouter>
       <div className="app">
         <Navbar />
         <main>
@@ -35,6 +37,6 @@ export default function App() {
           </Routes>
         </main>
       </div>
-    </BrowserRouter>
+  </HashRouter>
   );
 }

@@ -207,7 +207,7 @@ const MenuPage = () => {
 
                   {/* Weight options */}
                   <div className="weight-options">
-                    <label>
+                    <label className="weight-option">
                       <input
                         type="radio"
                         name={`weight-${item.id}`}
@@ -219,10 +219,13 @@ const MenuPage = () => {
                             [item.id]: "500g",
                           }))
                         }
-                      />{" "}
-                      500g — ₹{item.price500g}
+                      />
+                      <div className="opt-text">
+                        <span className="opt-weight">500g</span>
+                        <span className="opt-price">₹{item.price500g}</span>
+                      </div>
                     </label>
-                    <label>
+                    <label className="weight-option">
                       <input
                         type="radio"
                         name={`weight-${item.id}`}
@@ -234,8 +237,11 @@ const MenuPage = () => {
                             [item.id]: "1kg",
                           }))
                         }
-                      />{" "}
-                      1kg — ₹{item.price1kg}
+                      />
+                      <div className="opt-text">
+                        <span className="opt-weight">1kg</span>
+                        <span className="opt-price">₹{item.price1kg}</span>
+                      </div>
                     </label>
                   </div>
 
