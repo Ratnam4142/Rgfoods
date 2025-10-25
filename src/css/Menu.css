@@ -41,6 +41,11 @@
   overflow-y: auto;
 }
 
+/* hide mobile-only category tabs by default; shown in mobile media query */
+.category-tabs {
+  display: none;
+}
+
 .category-title {
   font-size: 24px;
   font-weight: bold;
@@ -189,6 +194,29 @@
   background: none;
 }
 
+/* Make increase/decrease buttons clearly separate and larger, especially on mobile */
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-controls button {
+  padding: 6px 10px;
+  min-width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.cart-controls span {
+  min-width: 26px;
+  text-align: center;
+  display: inline-block;
+}
+
 .cart-total {
   font-weight: bold;
   font-size: 18px;
@@ -286,6 +314,50 @@
     box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     cursor: pointer;
     font-weight: bold;
+  }
+
+  /* Mobile category tabs */
+  .category-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 12px;
+    background: #fff8f0;
+    border-bottom: 1px solid #ffe6cc;
+  }
+
+  .category-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .category-tab.active {
+    background: #ffe5cc;
+    border-color: #ffd6a5;
+    color: #e67e22;
+  }
+
+  /* Make cart controls more touch-friendly on mobile */
+  .cart-controls button {
+    min-width: 44px;
+    height: 44px;
+    font-size: 18px;
+    padding: 0;
+  }
+
+  .cart-controls .remove-btn {
+    min-width: auto;
+    height: 36px;
+    padding: 6px 10px;
+    color: red;
+    background: #fff0f0;
+    border-radius: 6px;
   }
 }
 

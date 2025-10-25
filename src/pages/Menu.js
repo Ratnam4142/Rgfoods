@@ -174,6 +174,21 @@ const MenuPage = () => {
 
       {/* CENTER CONTENT */}
       <div className="menu-center">
+        {/* Mobile category tabs (visible on small screens) */}
+        <div className="category-tabs">
+          {menuCategories.map((cat) => (
+            <button
+              key={cat.name}
+              className={
+                "category-tab " + (selectedCategory && selectedCategory.name === cat.name ? "active" : "")
+              }
+              onClick={() => setSelectedCategory(cat)}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
+
         {selectedCategory ? (
           <div>
             <h2 className="category-title">{selectedCategory.name}</h2>
