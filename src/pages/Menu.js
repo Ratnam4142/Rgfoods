@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Menu.css";
 
 const MenuPage = () => {
   const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showCartMobile, setShowCartMobile] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [checkoutDetails, setCheckoutDetails] = useState({
@@ -12,8 +13,7 @@ const MenuPage = () => {
     doorNumber: "",
     address: "",
   });
-  const [selectedWeights, setSelectedWeights] = useState({});
-  const [cartOpen, setCartOpen] = useState(false); // 👈 for mobile drawer toggle
+  const [selectedWeights, setSelectedWeights] = useState({}); // track selected weight for each item
 
   const menuCategories = [
     {
@@ -46,6 +46,22 @@ const MenuPage = () => {
     },
   ];
 
+  // auto-select first category on mount and default weights to 1kg
+  useEffect(() => {
+    if (menuCategories && menuCategories.length > 0) {
+      setSelectedCategory(menuCategories[0]);
+      // set default weight selection to 1kg for all items
+      const defaults = {};
+      menuCategories.forEach((cat) =>
+        cat.items.forEach((it) => {
+          defaults[it.id] = "1kg";
+        })
+      );
+      setSelectedWeights(defaults);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const toggleCategory = (categoryName) => {
     setExpandedCategories((prev) => ({
       ...prev,
@@ -53,7 +69,7 @@ const MenuPage = () => {
     }));
   };
 
-  const ImageEnsurePng = ({ itemId, svgPath, alt, ...props }) => {
+  const ImageEnsurePng = ({ itemId, svgPath, alt, width = 400, height = 300, ...props }) => {
     const [src] = useState(`/images/products/${itemId}.png`);
     return <img src={src} alt={alt} {...props} />;
   };
@@ -169,6 +185,8 @@ const MenuPage = () => {
                     svgPath={item.image}
                     alt={item.name}
                     className="menu-img"
+                    width={300}
+                    height={200}
                   />
                   <h3>{item.name}</h3>
 
@@ -219,7 +237,7 @@ const MenuPage = () => {
       </div>
 
       {/* RIGHT SIDEBAR (CART) */}
-      <div className={`sidebar-right ${cartOpen ? "open" : ""}`}>
+      <div className="sidebar-right">
         <h2>Your Cart</h2>
         {cart.length === 0 ? (
           <p className="empty-cart">No items added yet</p>
@@ -261,16 +279,57 @@ const MenuPage = () => {
         )}
       </div>
 
-      {/* ✅ Floating View Cart Button (only for mobile) */}
-      {cart.length > 0 && (
-        <button className="view-cart-btn" onClick={() => setCartOpen(!cartOpen)}>
-          {cartOpen ? "Close Cart" : `View Cart (${cart.length})`}
-        </button>
+      {/* Floating view cart button for mobile */}
+      <button
+        className="view-cart-btn"
+        onClick={() => setShowCartMobile(true)}
+        aria-label="View cart"
+      >
+        View Cart ({cart.reduce((s, i) => s + i.quantity, 0)})
+      </button>
+
+      {/* Mobile cart sheet */}
+      {showCartMobile && (
+        <div className="mobile-cart-overlay" onClick={() => setShowCartMobile(false)}>
+          <div className="mobile-cart" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-cart-header">
+              <h3>Your Cart</h3>
+              <button className="close-mobile-cart" onClick={() => setShowCartMobile(false)}>✕</button>
+            </div>
+            {cart.length === 0 ? (
+              <p className="empty-cart">No items added yet</p>
+            ) : (
+              <>
+                <ul className="cart-list">
+                  {cart.map((item) => (
+                    <li key={item.id} className="cart-item">
+                      <div>
+                        <p className="cart-name">{item.name}</p>
+                        <p className="cart-details">₹{item.price} × {item.quantity}</p>
+                      </div>
+                      <div className="cart-controls">
+                        <button onClick={() => updateQuantity(item.id, -1)}>−</button>
+                        <span>{item.quantity}</span>
+                        <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+                        <button className="remove-btn" onClick={() => removeItem(item.id)}>✕</button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="cart-total">Total: ₹{getTotal()}</div>
+                <button className="checkout-btn" onClick={() => { setShowCheckoutModal(true); setShowCartMobile(false); }}>Checkout</button>
+              </>
+            )}
+          </div>
+        </div>
       )}
 
       {/* CHECKOUT MODAL */}
       {showCheckoutModal && (
-        <div className="modal-overlay" onClick={() => setShowCheckoutModal(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowCheckoutModal(false)}
+        >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Order Details</h2>
             <form onSubmit={handleCheckout}>
@@ -279,41 +338,59 @@ const MenuPage = () => {
                 type="text"
                 value={checkoutDetails.fullName}
                 onChange={(e) =>
-                  setCheckoutDetails({ ...checkoutDetails, fullName: e.target.value })
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    fullName: e.target.value,
+                  })
                 }
                 required
               />
+
               <label>Mobile Number *</label>
               <input
                 type="tel"
                 value={checkoutDetails.mobileNumber}
                 onChange={(e) =>
-                  setCheckoutDetails({ ...checkoutDetails, mobileNumber: e.target.value })
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    mobileNumber: e.target.value,
+                  })
                 }
                 required
                 pattern="[0-9]{10}"
                 maxLength={10}
               />
+
               <label>Door Number *</label>
               <input
                 type="text"
                 value={checkoutDetails.doorNumber}
                 onChange={(e) =>
-                  setCheckoutDetails({ ...checkoutDetails, doorNumber: e.target.value })
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    doorNumber: e.target.value,
+                  })
                 }
                 required
               />
+
               <label>Address *</label>
               <textarea
                 value={checkoutDetails.address}
                 onChange={(e) =>
-                  setCheckoutDetails({ ...checkoutDetails, address: e.target.value })
+                  setCheckoutDetails({
+                    ...checkoutDetails,
+                    address: e.target.value,
+                  })
                 }
                 rows="3"
                 required
               />
+
               <div className="modal-buttons">
-                <button type="submit" className="whatsapp-btn">Send via WhatsApp</button>
+                <button type="submit" className="whatsapp-btn">
+                  Send via WhatsApp
+                </button>
                 <button
                   type="button"
                   className="cancel-btn"
