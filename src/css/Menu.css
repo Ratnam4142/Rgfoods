@@ -274,3 +274,58 @@
   border-radius: 6px;
   cursor: pointer;
 }
+/* ---------- MOBILE STYLES ---------- */
+@media (max-width: 768px) {
+  .menu-page {
+    flex-direction: column;
+  }
+
+  /* Hide sidebars initially */
+  .sidebar-left {
+    display: none;
+  }
+
+  .sidebar-right {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 80vh;
+    background: #fff;
+    border-left: none;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    transition: bottom 0.3s ease;
+    z-index: 9999;
+    padding: 16px;
+  }
+
+  /* When cart is visible */
+  .sidebar-right.open {
+    bottom: 0;
+  }
+
+  /* Floating "View Cart" button */
+  .view-cart-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 10000;
+  }
+
+  .view-cart-btn:hover {
+    background: #d35400;
+  }
+}
+

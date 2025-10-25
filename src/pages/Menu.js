@@ -12,7 +12,8 @@ const MenuPage = () => {
     doorNumber: "",
     address: "",
   });
-  const [selectedWeights, setSelectedWeights] = useState({}); // track selected weight for each item
+  const [selectedWeights, setSelectedWeights] = useState({});
+  const [cartOpen, setCartOpen] = useState(false); // 👈 for mobile drawer toggle
 
   const menuCategories = [
     {
@@ -52,7 +53,7 @@ const MenuPage = () => {
     }));
   };
 
-  const ImageEnsurePng = ({ itemId, svgPath, alt, width = 400, height = 300, ...props }) => {
+  const ImageEnsurePng = ({ itemId, svgPath, alt, ...props }) => {
     const [src] = useState(`/images/products/${itemId}.png`);
     return <img src={src} alt={alt} {...props} />;
   };
@@ -168,8 +169,6 @@ const MenuPage = () => {
                     svgPath={item.image}
                     alt={item.name}
                     className="menu-img"
-                    width={300}
-                    height={200}
                   />
                   <h3>{item.name}</h3>
 
@@ -220,7 +219,7 @@ const MenuPage = () => {
       </div>
 
       {/* RIGHT SIDEBAR (CART) */}
-      <div className="sidebar-right">
+      <div className={`sidebar-right ${cartOpen ? "open" : ""}`}>
         <h2>Your Cart</h2>
         {cart.length === 0 ? (
           <p className="empty-cart">No items added yet</p>
@@ -262,12 +261,16 @@ const MenuPage = () => {
         )}
       </div>
 
+      {/* ✅ Floating View Cart Button (only for mobile) */}
+      {cart.length > 0 && (
+        <button className="view-cart-btn" onClick={() => setCartOpen(!cartOpen)}>
+          {cartOpen ? "Close Cart" : `View Cart (${cart.length})`}
+        </button>
+      )}
+
       {/* CHECKOUT MODAL */}
       {showCheckoutModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowCheckoutModal(false)}
-        >
+        <div className="modal-overlay" onClick={() => setShowCheckoutModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Order Details</h2>
             <form onSubmit={handleCheckout}>
@@ -276,59 +279,41 @@ const MenuPage = () => {
                 type="text"
                 value={checkoutDetails.fullName}
                 onChange={(e) =>
-                  setCheckoutDetails({
-                    ...checkoutDetails,
-                    fullName: e.target.value,
-                  })
+                  setCheckoutDetails({ ...checkoutDetails, fullName: e.target.value })
                 }
                 required
               />
-
               <label>Mobile Number *</label>
               <input
                 type="tel"
                 value={checkoutDetails.mobileNumber}
                 onChange={(e) =>
-                  setCheckoutDetails({
-                    ...checkoutDetails,
-                    mobileNumber: e.target.value,
-                  })
+                  setCheckoutDetails({ ...checkoutDetails, mobileNumber: e.target.value })
                 }
                 required
                 pattern="[0-9]{10}"
                 maxLength={10}
               />
-
               <label>Door Number *</label>
               <input
                 type="text"
                 value={checkoutDetails.doorNumber}
                 onChange={(e) =>
-                  setCheckoutDetails({
-                    ...checkoutDetails,
-                    doorNumber: e.target.value,
-                  })
+                  setCheckoutDetails({ ...checkoutDetails, doorNumber: e.target.value })
                 }
                 required
               />
-
               <label>Address *</label>
               <textarea
                 value={checkoutDetails.address}
                 onChange={(e) =>
-                  setCheckoutDetails({
-                    ...checkoutDetails,
-                    address: e.target.value,
-                  })
+                  setCheckoutDetails({ ...checkoutDetails, address: e.target.value })
                 }
                 rows="3"
                 required
               />
-
               <div className="modal-buttons">
-                <button type="submit" className="whatsapp-btn">
-                  Send via WhatsApp
-                </button>
+                <button type="submit" className="whatsapp-btn">Send via WhatsApp</button>
                 <button
                   type="button"
                   className="cancel-btn"
