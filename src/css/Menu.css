@@ -152,7 +152,7 @@
   border-radius: 6px;
   cursor: pointer;
   transition: 0.3s;
-  width: 90%;
+  width: 100%;
 }
 
 .menu-card button:hover {
@@ -205,8 +205,8 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
-  margin-bottom: 8px;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .cart-controls button {
@@ -249,10 +249,21 @@
   display: inline-block;
 }
 
+.cart-summary {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.cart-items-count {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
 .cart-total {
   font-weight: bold;
   font-size: 18px;
-  margin-top: 10px;
   text-align: right;
 }
 
@@ -377,8 +388,8 @@
 
   /* Make cart controls more touch-friendly on mobile */
   .cart-controls button {
-    min-width: 44px;
-    height: 44px;
+    /* min-width: 44px;
+    height: 44px; */
     font-size: 18px;
     padding: 0;
   }

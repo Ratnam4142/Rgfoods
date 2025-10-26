@@ -14,6 +14,10 @@ const MenuPage = () => {
     address: "",
   });
   const [selectedWeights, setSelectedWeights] = useState({}); // track selected weight for each item
+  const [removeConfirmId, setRemoveConfirmId] = useState(null);
+  const [showDescriptionDialog, setShowDescriptionDialog] = useState(false);
+  const [selectedItemForDesc, setSelectedItemForDesc] = useState(null);
+  const [tempDescription, setTempDescription] = useState("");
 
   const menuCategories = [
     {
@@ -40,8 +44,15 @@ const MenuPage = () => {
     {
       name: "Pickles",
       items: [
-        { id: 12, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
-        { id: 13, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+        { id: 13, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 12, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+      ],
+    },
+    {
+      name: "Powders",
+      items: [
+        { id: 13, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 12, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
       ],
     },
   ];
@@ -84,19 +95,27 @@ const MenuPage = () => {
     const price = selectedWeight === "1kg" ? item.price1kg : item.price500g;
     const uniqueId = `${item.id}-${selectedWeight}`;
 
-    setCart((prevCart) => {
-      const existing = prevCart.find((i) => i.id === uniqueId);
-      if (existing) {
-        return prevCart.map((i) =>
+    // For existing items, just increment quantity
+    const existing = cart.find((i) => i.id === uniqueId);
+    if (existing) {
+      setCart(prevCart =>
+        prevCart.map((i) =>
           i.id === uniqueId ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      } else {
-        return [
-          ...prevCart,
-          { ...item, id: uniqueId, weight: selectedWeight, price, quantity: 1 },
-        ];
-      }
+        )
+      );
+      return;
+    }
+
+    // For new items, show description dialog
+    setSelectedItemForDesc({
+      ...item,
+      id: uniqueId,
+      weight: selectedWeight,
+      price,
+      quantity: 1
     });
+    setTempDescription("");
+    setShowDescriptionDialog(true);
   };
 
   const updateQuantity = (itemId, delta) => {
@@ -112,11 +131,26 @@ const MenuPage = () => {
   };
 
   const removeItem = (itemId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+    setRemoveConfirmId(itemId);
+  };
+
+  const confirmRemove = (confirmed) => {
+    if (confirmed && removeConfirmId) {
+      setCart((prevCart) => prevCart.filter((item) => item.id !== removeConfirmId));
+    }
+    setRemoveConfirmId(null);
   };
 
   const getTotal = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const handleAddWithDescription = () => {
+    if (selectedItemForDesc) {
+      setCart(prevCart => [...prevCart, { ...selectedItemForDesc, description: tempDescription }]);
+      setShowDescriptionDialog(false);
+      setSelectedItemForDesc(null);
+    }
   };
 
   const handleCheckout = (e) => {
@@ -166,7 +200,7 @@ const MenuPage = () => {
               }}
             >
               <h3>{category.name}</h3>
-              <span>{expandedCategories[category.name] ? "▲" : "▼"}</span>
+              <span>{expandedCategories[category.name] ? "" : ""}</span>
             </div>
           </div>
         ))}
@@ -299,6 +333,73 @@ const MenuPage = () => {
           </>
         )}
       </div>
+
+      {/* Description Dialog */}
+      {showDescriptionDialog && (
+        <div className="modal-overlay" onClick={() => {
+          setShowDescriptionDialog(false);
+          setSelectedItemForDesc(null);
+        }}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Description</h2>
+            <textarea
+              value={tempDescription}
+              onChange={(e) => setTempDescription(e.target.value)}
+              placeholder="Enter Description"
+              maxLength={500}
+              rows={4}
+              style={{ width: '100%', marginTop: '10px', padding: '8px' }}
+            />
+            <div style={{ textAlign: 'right', color: '#666', fontSize: '12px', margin: '5px 0' }}>
+              {tempDescription.length}/500
+            </div>
+            <div className="modal-buttons">
+              <button 
+                className="cancel-btn"
+                onClick={() => {
+                  setShowDescriptionDialog(false);
+                  setSelectedItemForDesc(null);
+                }}
+              >
+                Cancel
+              </button>
+              <button 
+                className="whatsapp-btn"
+                onClick={handleAddWithDescription}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Remove Confirmation Dialog */}
+      {removeConfirmId && (
+        <div className="modal-overlay" onClick={() => confirmRemove(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Remove Item</h2>
+            <p style={{ margin: '20px 0', textAlign: 'center' }}>
+              Are you sure you want to remove this item from your cart?
+            </p>
+            <div className="modal-buttons">
+              <button
+                className="cancel-btn"
+                onClick={() => confirmRemove(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="whatsapp-btn"
+                style={{ background: '#dc3545' }}
+                onClick={() => confirmRemove(true)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Floating view cart button for mobile */}
       <button
