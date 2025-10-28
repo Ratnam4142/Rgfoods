@@ -44,15 +44,19 @@ const MenuPage = () => {
     {
       name: "Pickles",
       items: [
-        { id: 13, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
-        { id: 12, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+        { id: 12, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 13, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+         { id: 14, name: "Mango Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 15, name: "Tamoto Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+         { id: 16, name: "Lemon Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 17, name: "Amla Pickle", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
       ],
     },
     {
-      name: "Powders",
+      name: "Karam Podis",
       items: [
-        { id: 13, name: "Chicken Pickle", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
-        { id: 12, name: "Chicken Gongura", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
+        { id: 18, name: "Munagaku karam Podi", price1kg: 1400, price500g: 700, image: "/images/products/11.svg" },
+        { id: 19, name: "karivepaku karam podi", price1kg: 1400, price500g: 700, image: "/images/products/12.svg" },
       ],
     },
   ];
