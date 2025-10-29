@@ -206,11 +206,11 @@ const MenuPage = () => {
                 setSelectedCategory(category);
               }}
             >
-              <h3>{category.name}</h3>
+              <span>{category.name}</span>
               <span>{expandedCategories[category.name] ? "" : ""}</span>
             </div>
           </div>
-        ))}
+        ))} 
       </div>
 
       {/* CENTER CONTENT */}

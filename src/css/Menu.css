@@ -37,7 +37,7 @@
 /* CENTER CONTENT */
 .menu-center {
   flex: 1;
-  padding: 24px;
+  padding-left: 24px;
   overflow-y: auto;
 }
 
@@ -62,14 +62,14 @@
 .menu-card {
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 12px;
   transition: 0.3s;
 }
 
 .menu-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 1);
 }
 
 .menu-img {
@@ -234,9 +234,9 @@
 }
 
 .cart-controls button {
-  padding: 6px 10px;
-  min-width: 36px;
-  height: 36px;
+  /* padding: 6px 10px;
+  min-width: 36px; */
+  /* height: 36px; */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -244,7 +244,7 @@
 }
 
 .cart-controls span {
-  min-width: 26px;
+  /* min-width: 26px; */
   text-align: center;
   display: inline-block;
 }

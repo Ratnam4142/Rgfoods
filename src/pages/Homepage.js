@@ -317,7 +317,7 @@ export default function Home() {
               {/* Instagram */}
               <a
                 className="social-icon"
-                href="https://instagram.com/"
+                href="https://www.instagram.com/rpfoods_sweets_snacks?igsh=MTVsaGQ1bmowZHNjZA=="
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
