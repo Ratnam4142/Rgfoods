@@ -28,7 +28,10 @@ const MenuPage = () => {
         { id: 3, name: "Nuvvula Laddu", price1kg: 699, price500g: 350, image: "/images/products/3.png" },
         { id: 4, name: "Palli Laddu", price1kg: 599, price500g: 300, image: "/images/products/4.png" },
         { id: 5, name: "Rava Laddu", price1kg: 599, price500g: 300, image: "/images/products/5.png" },
-        { id: 6, name: "Boondi laddu", price1kg: 599, price500g: 300, image: "/images/products/5.png" },
+        { id: 6, name: "Boondi laddu", price1kg: 599, price500g: 300, image: "/images/products/6.png" },
+        { id: 20, name: "Black Sesame Laddu", price1kg: 999, price500g: 550, image: "/images/products/20.png" },
+        { id: 21, name: "Dry Fruit Laddu", price1kg: 1099, price500g: 599, image: "/images/products/21.png" },
+        { id: 22, name: "Coconut Laddu", price1kg: 599, price500g: 320, image: "/images/products/22.png" },
       ],
     },
     {
