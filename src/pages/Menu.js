@@ -15,9 +15,7 @@ const MenuPage = () => {
   });
   const [selectedWeights, setSelectedWeights] = useState({}); // track selected weight for each item
   const [removeConfirmId, setRemoveConfirmId] = useState(null);
-  const [showDescriptionDialog, setShowDescriptionDialog] = useState(false);
-  const [selectedItemForDesc, setSelectedItemForDesc] = useState(null);
-  const [tempDescription, setTempDescription] = useState("");
+
 
   const menuCategories = [
     {
@@ -113,16 +111,17 @@ const MenuPage = () => {
       return;
     }
 
-    // For new items, show description dialog
-    setSelectedItemForDesc({
-      ...item,
-      id: uniqueId,
-      weight: selectedWeight,
-      price,
-      quantity: 1
-    });
-    setTempDescription("");
-    setShowDescriptionDialog(true);
+    // For new items, add directly to cart (no description modal)
+    setCart(prevCart => [
+      ...prevCart,
+      {
+        ...item,
+        id: uniqueId,
+        weight: selectedWeight,
+        price,
+        quantity: 1
+      }
+    ]);
   };
 
   const updateQuantity = (itemId, delta) => {
@@ -152,13 +151,7 @@ const MenuPage = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
-  const handleAddWithDescription = () => {
-    if (selectedItemForDesc) {
-      setCart(prevCart => [...prevCart, { ...selectedItemForDesc, description: tempDescription }]);
-      setShowDescriptionDialog(false);
-      setSelectedItemForDesc(null);
-    }
-  };
+
 
   const handleCheckout = (e) => {
     e.preventDefault();
@@ -168,6 +161,15 @@ const MenuPage = () => {
       alert("Please fill all mandatory fields (Name, Mobile, Door No, Address).");
       return;
     }
+
+  // Generate order ID based on date/time (e.g. ORD-YYYYMMDD-HHMMSS-AM/PM)
+  const now = new Date();
+  const pad = (n) => n.toString().padStart(2, '0');
+  let hours = now.getHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  const orderId = `ORD-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(hours)}${pad(now.getMinutes())}${pad(now.getSeconds())}-${ampm}`;
 
     const yourWhatsAppNumber = "7981213612";
     const cartLines = cart.map(
@@ -179,7 +181,7 @@ const MenuPage = () => {
     const cartText = cartLines.join("%0A");
     const total = getTotal();
 
-    const message = `*New Order*%0A%0A*Name:* ${fullName}%0A*Mobile:* ${mobileNumber}%0A*Door No.:* ${doorNumber}%0A*Address:* ${address}%0A%0A*Items:*%0A${cartText}%0A%0A*Total:* ₹${total}`;
+    const message = `*New Order*%0A*Order ID:* ${orderId}%0A%0A*Name:* ${fullName}%0A*Mobile:* ${mobileNumber}%0A*Door No.:* ${doorNumber}%0A*Address:* ${address}%0A%0A*Items:*%0A${cartText}%0A%0A*Total:* ₹${total}`;
     const whatsappUrl = `https://wa.me/91${yourWhatsAppNumber}?text=${message}`;
     window.open(whatsappUrl, "_blank");
 
@@ -341,45 +343,7 @@ const MenuPage = () => {
         )}
       </div>
 
-      {/* Description Dialog */}
-      {showDescriptionDialog && (
-        <div className="modal-overlay" onClick={() => {
-          setShowDescriptionDialog(false);
-          setSelectedItemForDesc(null);
-        }}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>Description</h2>
-            <textarea
-              value={tempDescription}
-              onChange={(e) => setTempDescription(e.target.value)}
-              placeholder="Enter Description"
-              maxLength={500}
-              rows={4}
-              style={{ width: '100%', marginTop: '10px', padding: '8px' }}
-            />
-            <div style={{ textAlign: 'right', color: '#666', fontSize: '12px', margin: '5px 0' }}>
-              {tempDescription.length}/500
-            </div>
-            <div className="modal-buttons">
-              <button 
-                className="cancel-btn"
-                onClick={() => {
-                  setShowDescriptionDialog(false);
-                  setSelectedItemForDesc(null);
-                }}
-              >
-                Cancel
-              </button>
-              <button 
-                className="whatsapp-btn"
-                onClick={handleAddWithDescription}
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Remove Confirmation Dialog */}
       {removeConfirmId && (
