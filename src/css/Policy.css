@@ -1,0 +1,106 @@
+/* === Policy Page Styling === */
+.policy-container {
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 0 25px;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #3b3b3b;
+}
+
+.policy-container h1 {
+  color: #d95f1b;
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* === Policy Navigation Bar === */
+.policy-navigation {
+  padding: 20px 0;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 5;
+}
+
+/* === Sticky Back Button === */
+.back-button {
+  position: fixed;
+  top: 95px; /* distance from top */
+  left: 45px; /* distance from left */
+  display: inline-flex;
+  align-items: center;
+  /* gap: 6px; */
+  background-color: #d95f1b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.back-button::before {
+  content: "←";
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #b84b14;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(217, 95, 27, 0.25);
+}
+
+/* === Centered Policy Nav Links === */
+.policy-nav-container {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+.policy-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center horizontally */
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.policy-nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.policy-nav-links a:hover {
+  color: #fff;
+  background-color: #d95f1b;
+}
+
+.policy-nav-links a.active {
+  background-color: #d95f1b;
+  color: #fff;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .back-button {
+    position: fixed;
+    top: 80px;
+    left: 15px;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .policy-nav-links {
+    gap: 15px;
+  }
+}

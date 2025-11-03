@@ -411,16 +411,16 @@ export default function Home() {
             <h5>Help & Info</h5>
             <ul className="footer-links">
               <li>
-                <a href="/shipping">Shipping Policy</a>
+                <a href="#/shipping">Shipping Policy</a>
               </li>
               <li>
-                <a href="/returns">Returns & Refunds</a>
+                <a href="#/returns">Returns & Refunds</a>
               </li>
               <li>
-                <a href="/privacy">Privacy Policy</a>
+                <a href="#/privacy">Privacy Policy</a>
               </li>
               <li>
-                <a href="/terms">Terms of Service</a>
+                <a href="#/terms">Terms of Service</a>
               </li>
             </ul>
           </div>
@@ -433,8 +433,8 @@ export default function Home() {
             our village kitchen to yours.
           </small>
           <div className="footer-legal">
-            <a href="/privacy">Privacy</a> • <a href="/terms">Terms</a> •{" "}
-            <a href="/sitemap">Sitemap</a>
+            <a href="#/privacy">Privacy</a> • <a href="#/terms">Terms</a> •{" "}
+            <a href="#/sitemap">Sitemap</a>
           </div>
         </div>
       </footer>
