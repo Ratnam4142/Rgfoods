@@ -37,11 +37,12 @@
 /* CENTER CONTENT */
 .menu-center {
   flex: 1;
-  padding-left: 24px;
+  padding-left: 0; /* ← Fix: Remove left padding */
+  padding-right: 0; /* ← Fix: Remove right padding */
   overflow-y: auto;
 }
 
-/* hide mobile-only category tabs by default; shown in mobile media query */
+/* Hide mobile-only category tabs by default; shown in mobile media query */
 .category-tabs {
   display: none;
 }
@@ -50,13 +51,15 @@
   font-size: 24px;
   font-weight: bold;
   color: #e67e22;
-  /* margin-bottom: 16px; */
+  margin-bottom: 1px;
+  padding-left: 12px;
 }
 
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 12px; /* ← Fix: Tighten gap */
+  padding: 10px; /* ← Fix: Remove extra padding */
 }
 
 .menu-card {
@@ -64,7 +67,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   text-align: center;
-  padding: 12px;
+  padding: 12px; /* ← Fix: Reduce padding */
   transition: 0.3s;
 }
 
@@ -77,6 +80,7 @@
   height: 160px;
   object-fit: cover;
   border-radius: 6px;
+  margin: 0; /* ← Fix: Ensure no extra margin */
 }
 
 .menu-card h3 {
@@ -140,7 +144,7 @@
 }
 
 .weight-option input[type="radio"]:checked {
-  box-shadow: 0 0 0 4px rgba(230,126,34,0.08);
+  box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.08);
 }
 
 /* ADD TO CART BUTTON */
@@ -173,7 +177,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  height: 90vh; /* slightly smaller cart height */
+  height: 90vh; /* Slightly smaller cart height */
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
@@ -234,9 +238,6 @@
 }
 
 .cart-controls button {
-  /* padding: 6px 10px;
-  min-width: 36px; */
-  /* height: 36px; */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -244,7 +245,6 @@
 }
 
 .cart-controls span {
-  /* min-width: 26px; */
   text-align: center;
   display: inline-block;
 }
@@ -291,7 +291,7 @@
 .mobile-cart-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1200;
   display: flex;
   align-items: flex-end;
@@ -354,7 +354,7 @@
     border: none;
     padding: 12px 16px;
     border-radius: 28px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     font-weight: bold;
   }
@@ -372,7 +372,7 @@
   .category-tab {
     background: transparent;
     border: 1px solid transparent;
-    padding: 8px 12px;
+    /* padding: 8px 12px; */
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
@@ -388,8 +388,8 @@
 
   /* Make cart controls more touch-friendly on mobile */
   .cart-controls button {
-    /* min-width: 44px;
-    height: 44px; */
+    min-width: 44px;
+    height: 44px;
     font-size: 18px;
     padding: 0;
   }

@@ -20,10 +20,6 @@ function Navbar() {
             <h1>RP Foods</h1>
             <small>Bringing back your MoM taste</small>
           </Link>
-          {/* <div className="tagline">
-            <span>RURAL PANTRY</span>
-            <p>Missing mom's cooking? We're your food family.</p>
-          </div> */}
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>

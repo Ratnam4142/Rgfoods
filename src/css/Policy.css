@@ -26,7 +26,7 @@
 /* === Sticky Back Button === */
 .back-button {
   position: fixed;
-  top: 95px; /* distance from top */
+ margin-top: 20px;
   left: 45px; /* distance from left */
   display: inline-flex;
   align-items: center;
@@ -43,6 +43,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
+  z-index: 1000;
 }
 
 .back-button::before {

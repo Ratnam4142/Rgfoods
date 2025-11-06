@@ -70,7 +70,7 @@ const MenuPage = () => {
       const defaults = {};
       menuCategories.forEach((cat) =>
         cat.items.forEach((it) => {
-          defaults[it.id] = "1kg";
+          defaults[it.id] = "";
         })
       );
       setSelectedWeights(defaults);
