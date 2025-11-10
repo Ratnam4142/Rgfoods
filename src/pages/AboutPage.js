@@ -16,7 +16,7 @@ export default function About() {
           <ul className="about-list">
             <li>Small-batch handcrafted laddus</li>
             <li>Clean ingredients & minimal processing</li>
-            <li>Eco-friendly packaging</li>
+            <li>Eco-friendly packaging </li>
           </ul>
         </div>
 
