@@ -1,11 +1,12 @@
 // src/pages/About.js
 import React from 'react';
-import '../css/Home.css';
+import '../css/About.css'; // Link to the new CSS file
 
 export default function About() {
   return (
     <section className="about-page">
       <div className="about-inner">
+        {/* Left Section: Text Content */}
         <div className="about-text">
           <h2>Our Promise</h2>
           <p>
@@ -18,8 +19,12 @@ export default function About() {
             <li>Eco-friendly packaging</li>
           </ul>
         </div>
+
+        {/* Right Section: Media/Visuals */}
         <div className="about-media">
-          <div className="media-card">🥣</div>
+          <div className="media-card">
+            🥣 {/* Placeholder emoji; replace with an actual image */}
+          </div>
         </div>
       </div>
     </section>

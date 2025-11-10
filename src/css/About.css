@@ -1,0 +1,103 @@
+/* ABOUT PAGE STYLING */
+.about-page {
+  padding: 40px 20px;
+  background-color: #fff8f0; /* Warm, inviting background */
+  font-family: Arial, sans-serif;
+}
+
+.about-inner {
+  display: flex;
+  flex-direction: row; /* Default layout for desktop */
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px; /* Space between text and media */
+}
+
+/* LEFT SECTION: TEXT CONTENT */
+.about-text {
+  flex: 1;
+  max-width: 50%; /* Limits text width for readability */
+}
+
+.about-text h2 {
+  font-size: 36px;
+  color: #e67e22; /* Warm orange for headings */
+  margin-bottom: 16px;
+}
+
+.about-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333; /* Dark gray for body text */
+  margin-bottom: 24px;
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-list li {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 24px;
+}
+
+.about-list li::before {
+  content: '•'; /* Bullet point */
+  color: #e67e22; /* Orange bullet */
+  font-size: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* RIGHT SECTION: MEDIA/VISUALS */
+.about-media {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  font-size: 48px; /* Larger emoji size */
+  color: #e67e22; /* Match orange theme */
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 768px) {
+  .about-inner {
+    flex-direction: column; /* Stack text and media on mobile */
+    gap: 24px; /* Reduce spacing */
+  }
+
+  .about-text {
+    max-width: 100%; /* Full width on mobile */
+  }
+
+  .about-media {
+    justify-content: center;
+  }
+
+  .media-card {
+    width: 120px;
+    height: 120px; /* Smaller card on mobile */
+    font-size: 36px; /* Slightly smaller emoji */
+  }
+}
