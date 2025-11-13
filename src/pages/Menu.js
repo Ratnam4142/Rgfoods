@@ -169,7 +169,7 @@ const MenuPage = () => {
   const ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   if (hours === 0) hours = 12;
-  const orderId = `ORD-${pad(now.getDate())}${pad(now.getMonth()+1)}${now.getFullYear()}-${pad(hours)}${pad(now.getMinutes())}${pad(now.getSeconds())}-${ampm}`;
+  const orderId = `RP-${pad(now.getDate())}${pad(now.getMonth()+1)}${now.getFullYear()}-${pad(hours)}${pad(now.getMinutes())}${pad(now.getSeconds())}-${ampm}`;
 
     const yourWhatsAppNumber = "7981213612";
     const cartLines = cart.map(
