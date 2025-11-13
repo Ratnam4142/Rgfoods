@@ -161,7 +161,6 @@ const MenuPage = () => {
       alert("Please fill all mandatory fields (Name, Mobile, Door No, Address).");
       return;
     }
-
   // Generate order ID based on date/time (e.g. ORD-YYYYMMDD-HHMMSS-AM/PM)
   const now = new Date();
   const pad = (n) => n.toString().padStart(2, '0');
@@ -170,7 +169,6 @@ const MenuPage = () => {
   hours = hours % 12;
   if (hours === 0) hours = 12;
   const orderId = `RP-${pad(now.getDate())}${pad(now.getMonth()+1)}${now.getFullYear()}-${pad(hours)}${pad(now.getMinutes())}${pad(now.getSeconds())}-${ampm}`;
-
     const yourWhatsAppNumber = "7981213612";
     const cartLines = cart.map(
       (item) =>
