@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Homepage';
 import About from './pages/AboutPage.js';
 import Menu from './pages/Menu';
+import Footer from './pages/footer';
 import ScrollToTop from './components/ScrollToTop';
 import ShippingPolicy from './pages/ShippingPolicy';
 import ReturnsPolicy from './pages/ReturnsPolicy';
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/terms" element={<TermsOfService />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </HashRouter>
   );

@@ -157,6 +157,31 @@ const ITEMS = [
     extraTe: "మెత్తగా, రుచికరంగా — పిల్లలు మరియు పెద్దలందరూ ఇష్టపడతారు.",
     image: process.env.PUBLIC_URL + "/images/products/22.png",
   },
+  {
+  id: "BeetRoot sweet",
+  titleEn: "Beetroot Sweet",
+  titleTe: "బీట్‌రూట్ స్వీట్",
+
+  aboutEn:
+    "A delicious traditional sweet made with fresh beetroot, jaggery, ghee, and a rich mix of nuts and seeds like pumpkin seeds, watermelon seeds, almonds, and cashews.",
+  aboutTe:
+    "తాజా బీట్‌రూట్, బెల్లం, నెయ్యి మరియు గుమ్మడికాయ గింజలు, పుచ్చకాయ గింజలు, బాదం, జీడిపప్పు వంటి పోషకమైన గింజలతో తయారు చేసిన రుచికరమైన సంప్రదాయ స్వీట్.",
+
+  benefitsEn:
+    "Rich in iron and antioxidants from beetroot, supports digestion, boosts energy, and provides healthy fats and proteins from nuts and seeds.",
+  benefitsTe:
+    "బీట్‌రూట్‌లోని ఐరన్ మరియు యాంటీఆక్సిడెంట్లు శక్తిని పెంచుతాయి, జీర్ణానికి సహాయపడతాయి మరియు గింజలు ఆరోగ్యకరమైన కొవ్వులు, ప్రోటీన్లు అందిస్తాయి.",
+
+  caloriesEn: "Approx. 120–130 kcal per piece.",
+  caloriesTe: "ఒక్క ముక్కకు సుమారు 120–130 క్యాలరీలు.",
+
+  extraEn:
+    "Naturally sweet, colorful, and nutritious — a perfect balance of taste and health for all age groups.",
+  extraTe:
+    "సహజ తీపి, ఆకర్షణీయమైన రంగు మరియు పోషకతతో — అన్ని వయసుల వారికి ఆరోగ్యకరమైన రుచికరమైన స్వీట్.",
+
+  image: process.env.PUBLIC_URL + "/images/products/23.png",
+},
 ];
 
 export default function Home() {
@@ -247,6 +272,15 @@ export default function Home() {
               </div>
               <div className="alternating-content">
                 <h3>{it.titleEn}</h3>
+                 {/* <h3>
+                  <a
+                   href={`/#/menu#${encodeURIComponent(it.id)}`}
+                   className="product-link"
+                   aria-label={`View ${it.titleEn} on menu`}
+                >
+                   {it.titleEn}
+                 </a>
+                </h3> */}
                 <p className="muted">{it.aboutEn}</p>
                 <div className="product-meta">
                   <span className="pill">{it.caloriesEn}</span>
@@ -274,16 +308,16 @@ export default function Home() {
         </div>
       </section>
       {/* HIGH-LEVEL FOOTER */}
-      <footer className="hf-footer">
+      {/* <footer className="hf-footer">
         <div className="container footer-grid">
-          {/* Column 1: Brand */}
+          
           <div className="footer-col">
             <h4>RPfoods</h4>
             <p className="muted">
               Missing mom's cooking? We're your food family.
             </p>
             <div className="footer-social">
-              {/* WhatsApp (uses site's contact number) */}
+              
               <a
                 className="social-icon"
                 href="https://wa.me/917981213612"
@@ -314,7 +348,7 @@ export default function Home() {
                 </svg>
               </a>
 
-              {/* Instagram */}
+            
               <a
                 className="social-icon"
                 href="https://www.instagram.com/rpfoods_sweets_snacks?igsh=MTVsaGQ1bmowZHNjZA=="
@@ -351,7 +385,7 @@ export default function Home() {
                 </svg>
               </a>
 
-              {/* Facebook */}
+            
               <a
                 className="social-icon"
                 href="https://facebook.com/"
@@ -377,7 +411,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Column 2: Contact */}
+         
           <div className="footer-col">
             <h5>Contact Us</h5>
             <p className="muted">
@@ -390,7 +424,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Column 3: Quick Links */}
+          
           <div className="footer-col">
             <h5>Quick Links</h5>
             <ul className="footer-links">
@@ -406,7 +440,7 @@ export default function Home() {
             </ul>
           </div>
 
-          {/* Column 4: Policies (Optional) */}
+          
           <div className="footer-col">
             <h5>Help & Info</h5>
             <ul className="footer-links">
@@ -426,7 +460,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        
         <div className="footer-bottom container">
           <small>
             © {new Date().getFullYear()} RPfoods — Handcrafted with love from
@@ -437,7 +471,7 @@ export default function Home() {
             <a href="#/sitemap">Sitemap</a>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </main>
   );
 }

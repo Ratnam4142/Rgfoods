@@ -30,6 +30,7 @@ const MenuPage = () => {
         { id: 20, name: "Black Sesame Laddu", price1kg: 999, price500g: 550, image: "/images/products/20.png" },
         { id: 21, name: "Dry Fruit Laddu", price1kg: 1099, price500g: 599, image: "/images/products/21.png" },
         { id: 22, name: "Coconut Laddu", price1kg: 599, price500g: 320, image: "/images/products/22.png" },
+        { id: 23, name: "BeetRoot Sweet", price1kg: 899, price500g: 450, image: "/images/products/23.png" },
       ],
     },
     {
